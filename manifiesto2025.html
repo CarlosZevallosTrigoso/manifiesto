@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>manifiesto</title>
+  <style>
+    body {
+      font-family: monospace;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      background-color: #f4f4f4;
+      overflow: auto;
+    }
+    p {
+      max-width: 1500px; /* El ancho máximo de la caja de texto */
+      width: 100%; /* Ancho del 100%, pero limitado por max-width */
+      margin: 0 auto;
+      padding: 20px;
+      box-sizing: border-box;
+      background-color: #f4f4f4;
+      text-align: left;
+      font-size: 170%;
+    }
+    @media (max-width: 768px) {
+      p {
+        max-width: 90%; /* Para pantallas pequeñas */
+      }
+    }
+  </style>
+</head>
+<body>
+  <p>
+  manifiesto
+  </p>
+  <!-- Párrafo que contendrá el texto original -->
+  <p id="texto">
+    La jerarquía y la dominación colonial no son simplemente sistemas de organización social sino matrices profundas que han moldeado nuestra comprensión del mundo y de nosotros mismos. Estas estructuras de poder se entrelazan y refuerzan mutuamente, creando una red de opresiones que pretende capturar la totalidad de la experiencia viviente. Pero esta supuesta naturalidad es una ficción que se desmorona ante la evidencia de las múltiples formas de vida que constantemente escapan y desafían estos marcos de dominación. En cada territorio donde la jerarquía intenta imponerse, surgen prácticas de horizontalidad que la desmienten. En cada espacio donde el orden colonial-patriarcal busca establecerse, emergen formas de relación que lo subvierten. La plasticidad de la vida, su capacidad infinita de metamorfosis y devenir, hace imposible su captura definitiva en estructuras fijas de dominación. Las redes de ayuda mutua y solidaridad que proliferan en los márgenes demuestran que la cooperación no necesita jerarquía, que la organización puede surgir del encuentro entre diferencias. La descolonización y la destrucción del patriarcado no son objetivos separados sino aspectos de un mismo movimiento de liberación que busca transformar no solo las estructuras sociales sino las formas mismas de pensar y sentir. No se trata simplemente de invertir las jerarquías existentes o de crear nuevos centros de poder, sino de hacer imposible la centralización misma del poder a través de la multiplicación de formas de vida que escapan a su lógica. La crisis actual del sistema global revela que las estructuras jerárquicas y coloniales-patriarcales son incompatibles con la complejidad y riqueza de la experiencia social, con la multiplicidad de formas de existencia que pugnan por emerger. La destrucción de toda jerarquía es simultáneamente la creación de nuevas formas de vida, de nuevos modos de relación que no pueden ser capturados en las categorías del pensamiento dominante.
+    La transformación que proponemos es simultáneamente destructiva y creativa: destruye las estructuras de dominación mientras crea espacios donde la diferencia puede florecer sin jerarquía, donde la vida puede desarrollarse sin las imposiciones del orden colonial-patriarcal. No buscamos un nuevo orden sino la multiplicación del desorden creativo, no aspiramos a un poder alternativo sino a la disolución del poder en la potencia colectiva de crear y sostener otras formas de existencia. El futuro no está escrito porque la vida misma es apertura, porque en cada momento la potencia del devenir desborda los límites de lo establecido.
+  </p>
+  
+  
+  <script>
+    /******************************************************************
+     * 1. CSV embebido con palabras y alternativas
+     ******************************************************************/
+    const csvData = `
+palabra_original,alternativa_1,alternativa_2,alternativa_3,alternativa_4,alternativa_5
+del mundo,el planeta,el orbe,la tierra,el globo,el cosmos
+de nosotros mismos,del ser,de la identidad,del yo,de la conciencia,del individuo
+se ensamblan,se unen,se juntan,se conectan,se integran,se articulan
+de opresiones,de sometimientos,de subyugaciones,de dominios,de represiones,de controles
+una ficción,una historia,un relato,una narrativa,una fábula,un cuento
+de vida,de existencia,de ser,de vivir,de subsistencia,de experiencia
+de dominación,de control,de poder,de autoridad,de mando,de gobierno
+Las redes,Las conexiones,Las estructuras,Las tramas,Los vínculos,Los enlaces
+estructuras fijas,marcos rígidos,sistemas estables,esquemas inmóviles,patrones fijos,modelos estáticos
+del patriarcado,del machismo,del androcentrismo,del sexismo,de la masculinidad tóxica,del sistema patriarcal
+las jerarquías,los rangos,los niveles,los órdenes,las escalas,las categorías
+La crisis,El conflicto,La ruptura,El quiebre,La problemática,La dificultad
+emerger,surgir,aparecer,brotar,aflorar,manifestarse
+toda jerarquía,cada orden,todo rango,cada nivel,toda estructura,cada sistema
+destructiva y creativa,demoledora y constructiva,devastadora y productiva,arrasadora y generadora,demoledora y fecunda,destructora y creadora
+poder alternativo,autoridad diferente,fuerza distinta,dominio opcional,mando alterno,control diferenciado
+lo establecido,lo fijo,lo determinado,lo instaurado,lo instituido,lo consolidado
+colonial,patriarcal,racial,económica,cultural,humana
+`;
+
+    /******************************************************************
+     * 2. Función para parsear el CSV
+     ******************************************************************/
+    function parseCSV(csv) {
+      const lines = csv.trim().split('\n');
+      const headers = lines[0].split(',').map(h => h.trim());
+      const data = [];
+      for (let i = 1; i < lines.length; i++) {
+        const row = lines[i].split(',').map(value => value.trim());
+        let rowObj = {};
+        headers.forEach((header, index) => {
+          rowObj[header] = row[index] || "";
+        });
+        data.push(rowObj);
+      }
+      return data;
+    }
+
+    /******************************************************************
+     * 3. Construcción del diccionario de palabras dinámicas
+     ******************************************************************/
+    const dynamicWords = {};
+    const csvRows = parseCSV(csvData);
+    csvRows.forEach(row => {
+      const original = row.palabra_original.toLowerCase();
+      const alternatives = [];
+      Object.keys(row).forEach(key => {
+        if (key.startsWith("alternativa") && row[key] !== "") {
+          alternatives.push(row[key].toLowerCase());
+        }
+      });
+      if (alternatives.length > 0) {
+        dynamicWords[original] = alternatives;
+      }
+    });
+
+    /******************************************************************
+     * 4. Función para reemplazar palabras con alternativas aleatorias
+     ******************************************************************/
+    function replaceWord(original, alternatives) {
+      const alt = alternatives[Math.floor(Math.random() * alternatives.length)];
+      const regex = new RegExp(`(\\b(?:el|la)\\s+)?\\b${original}\\b`, 'gi');
+      return alt;
+    }
+
+    /******************************************************************
+     * 5. Función para actualizar el texto con tiempos aleatorios
+     ******************************************************************/
+    const originalText = document.getElementById('texto').textContent;
+    
+    function updateText() {
+      let newText = originalText;
+      // Reemplazar cada palabra con un intervalo de tiempo aleatorio
+      for (const original in dynamicWords) {
+        const alternatives = dynamicWords[original];
+        const alt = replaceWord(original, alternatives);
+        
+        // Reemplaza la palabra en el texto
+        newText = newText.replace(new RegExp(`(\\b(?:el|la)\\s+)?\\b${original}\\b`, 'gi'), alt);
+      }
+      
+      document.getElementById('texto').innerHTML = newText;
+    }
+
+    /******************************************************************
+     * 6. Asignar tiempos aleatorios para la actualización de cada palabra
+     ******************************************************************/
+    function applyRandomIntervals() {
+      for (const original in dynamicWords) {
+        const randomTime = Math.floor(Math.random() * (5000 - 2000)) + 2000;  // Intervalo aleatorio entre 2 y 5 segundos
+        setInterval(updateText, randomTime); // Llama updateText a intervalos aleatorios
+      }
+    }
+
+    /******************************************************************
+     * 7. Aplicación de los intervalos aleatorios al cargar la página
+     ******************************************************************/
+    applyRandomIntervals();
+  </script>
+</body>
+</html>
